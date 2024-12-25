@@ -14,6 +14,7 @@ func main() {
 	webPrefix := os.Getenv("WEB_PREFIX")
 	database := getEnv("DATABASE", "./sqlite.db")
 	bind := getEnv("BIND", "127.0.0.1:1234")
+	allowNewUsers := getEnv("ALLOW_NEW_USERS", "false") == "true"
 
 	// Get HMAC secret and validate it
 	hmacSecret := strings.TrimSpace(os.Getenv("HMAC_SECRET"))
@@ -23,7 +24,7 @@ func main() {
 
 	// Initialize app
 	app := &lib.App{}
-	app.Initialize(database, telegramToken, webPrefix, hmacSecret)
+	app.Initialize(database, telegramToken, webPrefix, hmacSecret, allowNewUsers)
 	defer app.Exit()
 
 	// Run the app
