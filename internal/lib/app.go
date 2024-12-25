@@ -9,11 +9,14 @@ import (
 )
 
 type App struct {
-	DB   *Database
-	Rest *echo.Echo
+	DB            *Database
+	Rest          *echo.Echo
+	AllowNewUsers bool
 }
 
-func (a *App) Initialize(dbParameters, token, prefix, hmacSecret string) {
+func (a *App) Initialize(dbParameters, token, prefix, hmacSecret string, allowNewUsers bool) {
+	a.AllowNewUsers = allowNewUsers
+
 	// Database
 	a.DB = NewDatabase(dbParameters)
 	a.DB.Init()
@@ -22,7 +25,7 @@ func (a *App) Initialize(dbParameters, token, prefix, hmacSecret string) {
 	a.Rest = NewRestServer(prefix, a.DB, hmacSecret)
 
 	// Telegram Bot
-	InitTelegram(token, a.DB)
+	InitTelegram(token, a.DB, allowNewUsers)
 }
 
 func (a *App) Run(bindParameter string) {

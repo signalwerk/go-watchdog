@@ -16,7 +16,7 @@ var InitTelegram = initTelegram
 var StartTelegram = startTelegram
 var SendTelegramMsg = sendTelegramMsg
 
-func initTelegram(token string, db *Database) {
+func initTelegram(token string, db *Database, allowNewUsers bool) {
 	// Telegram connection
 
 	if token == "" {
@@ -43,6 +43,14 @@ func initTelegram(token string, db *Database) {
 			Name: m.Sender.Username,
 			TgId: int64(m.Sender.ID),
 		}
+
+		if !allowNewUsers {
+			adminMsg := fmt.Sprintf("To request access, please contact the administrator with the following information:\nUsername: %s\nTelegram ID: %d",
+				u.Name, u.TgId)
+			bot.Send(m.Sender, adminMsg)
+			return
+		}
+
 		created := db.CreateOrGetUserKeyByTelegramId(&u)
 		if created {
 			bot.Send(m.Sender, fmt.Sprintf("Welcome! Your access key:\n%s", u.Key))
