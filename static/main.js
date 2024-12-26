@@ -6,24 +6,29 @@ console.log(url);
 var auto_refresh = setInterval(checkLogin, 30000);
 
 // https://stackoverflow.com/a/37096512
-function secondsToHms(d) {
-  var h = Math.floor(d / 3600);
-  var m = Math.floor((d % 3600) / 60);
-  var s = Math.floor((d % 3600) % 60);
-  var hDisplay = h > 0 ? h + "h " : "";
-  var mDisplay = m > 0 ? m + "m " : "";
-  var sDisplay = s > 0 ? s + "s " : "";
+const secondsToHms = (d) => {
+  const h = Math.floor(d / 3600);
+  const m = Math.floor((d % 3600) / 60);
+  const s = Math.floor((d % 3600) % 60);
+  const hDisplay = h > 0 ? `${h}h ` : "";
+  const mDisplay = m > 0 ? `${m}m ` : "";
+  const sDisplay = s > 0 ? `${s}s ` : "";
   return hDisplay + mDisplay + sDisplay;
-}
+};
 
-function hmsToSeconds(s) {
-  var re = /(\d+h)?\s*(\d+m)?\s*(\d+s)?/;
-  var a = re.exec(s);
-  var h = a[1] ? parseInt(a[1]) : 0;
-  var m = a[2] ? parseInt(a[2]) : 0;
-  var s = a[3] ? parseInt(a[3]) : 0;
-  return s + 60 * (m + 60 * h);
-}
+const hmsToSeconds = (input) => {
+  const re = /(\d+h)?\s*(\d+m)?\s*(\d+s)?/;
+  const [, h, m, s] = re.exec(input) || [];
+  return (
+    // seconds
+    (s ? parseInt(s) : 0) +
+    // minutes
+    60 *
+      ((m ? parseInt(m) : 0) +
+        // hours
+        60 * (h ? parseInt(h) : 0))
+  );
+};
 
 function createRow(row) {
   var exp_date = new Date(row.expiry * 1000);
