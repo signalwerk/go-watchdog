@@ -1,0 +1,17 @@
+services:
+  watchdog:
+    build: .
+    container_name: watchdog
+    restart: unless-stopped
+    ports:
+      - "1234:1234"
+    volumes:
+      - /DATA/watchdog:/data
+    environment:
+      - TZ=Europe/Zurich
+      - TELEGRAM_TOKEN=${TELEGRAM_TOKEN}
+      - BIND=${BIND}
+      - WEB_PREFIX=/
+      - HMAC_SECRET=${HMAC_SECRET}
+      - ALLOW_NEW_USERS=${ALLOW_NEW_USERS}
+      - DATABASE=/data/watchdog.sqlite
