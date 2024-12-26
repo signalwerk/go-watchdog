@@ -139,13 +139,18 @@ function userLoggedIn() {
   updateTable();
   $(".myLoggedOut").addClass("d-none");
   $(".myLoggedIn").removeClass("d-none");
+  $("#formKey").removeClass("is-invalid");
+  $("#formKey").addClass("is-valid");
 }
 
 function userLoggedOut() {
   document.cookie =
     "Authorization=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  $("#formKey").val("");
   $(".myLoggedOut").removeClass("d-none");
   $(".myLoggedIn").addClass("d-none");
+  $("#formKey").removeClass("is-valid");
+  $("#formKey").removeClass("is-invalid");
 }
 
 function checkLogin() {
@@ -168,11 +173,11 @@ $(document).ready(function () {
       url: url + "login",
       data: form.serialize(),
       success: function (data) {
-        $("#formKey").removeClass("is-invalid").addClass("is-valid");
         checkLogin();
       },
       error: function (data) {
-        $("#formKey").removeClass("is-valid").addClass("is-invalid");
+        userLoggedOut();
+        $("#formKey").addClass("is-invalid");
       },
     });
   });
