@@ -20,7 +20,7 @@ func initTelegram(token string, db *Database, allowNewUsers bool) {
 	// Telegram connection
 
 	if token == "" {
-		log.Println("WARNING: Telegram initalization skipped")
+		log.Println("WARNING: Telegram initalization skipped - empty token")
 		Tg = nil
 		return
 	}
