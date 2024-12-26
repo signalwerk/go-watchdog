@@ -179,7 +179,7 @@ $(document).ready(function () {
 
   // Logout
   $(document).on("click", "#buttonLogout", function (event) {
-    e.preventDefault();
+    event.preventDefault();
     userLoggedOut();
   });
 
