@@ -11,7 +11,6 @@ services:
       - TZ=Europe/Zurich
       - TELEGRAM_TOKEN=${TELEGRAM_TOKEN}
       - BIND=${BIND}
-      - WEB_PREFIX=/
       - HMAC_SECRET=${HMAC_SECRET}
       - ALLOW_NEW_USERS=${ALLOW_NEW_USERS}
       - DATABASE=/data/sqlite.db
