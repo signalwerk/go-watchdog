@@ -14,4 +14,4 @@ services:
       - WEB_PREFIX=/
       - HMAC_SECRET=${HMAC_SECRET}
       - ALLOW_NEW_USERS=${ALLOW_NEW_USERS}
-      - DATABASE=/data/watchdog.sqlite
+      - DATABASE=/data/sqlite.db
